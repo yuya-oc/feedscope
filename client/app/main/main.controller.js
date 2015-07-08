@@ -19,4 +19,8 @@ angular.module('feedScopeApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.addFeed = function(feedUrl, callback) {
+      console.log(feedUrl);
+    };
   });
