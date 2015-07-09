@@ -5,6 +5,7 @@
 
 'use strict';
 
+var Feed = require('../api/feed/feed.model');
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 
