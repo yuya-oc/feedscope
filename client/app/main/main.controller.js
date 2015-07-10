@@ -20,9 +20,19 @@ angular.module('feedScopeApp')
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.addFeed = function(feedName, feedUrl) {
-      Feed.subsucribe(feedName, feedUrl, function(err){
-        if(err) console.log(err);
-      });
+    $scope.addFeed = function(feedName, feedUrl){
+      Feed.save({},
+        {
+          name: feedName,
+          url: feedUrl
+        },
+        function(feed){
+          $scope.feeds = Feed.query();
+        },
+        function(err){
+          console.log(err);
+        }).$promise;
     };
+
+    $scope.feeds = Feed.query();
   });

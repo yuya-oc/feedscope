@@ -14,8 +14,7 @@ var Feed = require('./feed.model');
 
 // Get list of feeds
 exports.index = function(req, res) {
-  console.log(req.user);
-  Feed.find(function (err, things) {
+  Feed.find({subscriber: req.user._id}, function (err, things) {
     if(err) { return handleError(res, err); }
     return res.json(200, things);
   });
@@ -32,6 +31,7 @@ exports.show = function(req, res) {
 
 // Creates a new feed in the DB.
 exports.create = function(req, res) {
+  req.body.subscriber = req.user._id;
   Feed.create(req.body, function(err, thing) {
     if(err) { return handleError(res, err); }
     return res.json(201, thing);
