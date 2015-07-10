@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 var FeedSchema = new Schema({
   name: { type: String, required: true },
   url: { type: String, required: true },
-  subscriber: Schema.Types.ObjectId
+  subscriber: { type: Schema.Types.ObjectId, required: true },
+  tags: [Schema.Types.ObjectId]
 });
 
 /**
@@ -39,14 +40,13 @@ FeedSchema
   .path('url')
   .validate(function(value, respond) {
     var self = this;
-    this.constructor.findOne({url: value, subscriber: this.subscriber}, function(err, user) {
+    this.constructor.findOne({url: value, subscriber: this.subscriber}, function(err, feed) {
       if(err) throw err;
-      if(user) {
-        if(self.id === user.id) return respond(true);
+      if(feed) {
         return respond(false);
       }
       respond(true);
     });
-}, 'The specified url is already subscribed.');
+}, 'The specified feed is already subscribed.');
 
 module.exports = mongoose.model('Feed', FeedSchema);
