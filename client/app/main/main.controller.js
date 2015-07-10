@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', function ($scope, $http, Feed) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -20,7 +20,9 @@ angular.module('feedScopeApp')
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.addFeed = function(feedUrl, callback) {
-      console.log(feedUrl);
+    $scope.addFeed = function(feedName, feedUrl) {
+      Feed.subsucribe(feedName, feedUrl, function(err){
+        if(err) console.log(err);
+      });
     };
   });

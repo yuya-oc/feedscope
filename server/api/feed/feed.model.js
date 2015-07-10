@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var FeedSchema = new Schema({
-  name: String,
-  url: String,
+  name: { type: String, required: true },
+  url: { type: String, required: true },
   subscriber: Schema.Types.ObjectId
 });
 
@@ -17,14 +17,14 @@ var FeedSchema = new Schema({
 FeedSchema
   .path('name')
   .validate(function(name) {
-    return name.length;
+    return name && name.length;
   }, 'Name cannot be blank');
 
 // Validate empty url
 FeedSchema
   .path('url')
   .validate(function(url) {
-    return url.length;
+    return url && url.length;
   }, 'URL cannot be blank');
 
 // Validate empty subscriber
