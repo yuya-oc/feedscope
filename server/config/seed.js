@@ -31,6 +31,34 @@ Thing.find({}).remove(function() {
   });
 });
 
+var setupFeeds = function(email) {
+  Feed.find({}).remove(function() {
+    User.findOne({email: email}, function(err, tester) {
+      if(!tester) { console.log(email + ' not found!'); return; }
+      Feed.create({
+        name: 'MongoDB',
+        url: 'http://blog.mongodb.org/rss',
+        subscriber: tester._id
+      }, {
+        name: 'Express',
+        url: 'https://github.com/strongloop/express/releases.atom',
+        subscriber: tester._id
+      }, {
+        name: 'AngularJS',
+        url: 'http://angularjs.blogspot.com/feeds/posts/default',
+        subscriber: tester._id
+      }, {
+        name: 'Node.js',
+        url: 'http://blog.nodejs.org/feed/',
+        subscriber: tester._id
+      }, function(err) {
+        if(err) console.log(err);
+        else console.log('finished setting up feeds for ' + email);
+      });
+    });
+  });
+}
+
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
@@ -45,6 +73,7 @@ User.find({}).remove(function() {
     password: 'admin'
   }, function() {
       console.log('finished populating users');
+      setupFeeds('test@test.com');
     }
   );
 });
