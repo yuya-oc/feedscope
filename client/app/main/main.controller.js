@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('MainCtrl', function ($scope, $http, Feed) {
+  .controller('MainCtrl', function ($scope, $http, Auth, $location) {
+    if(Auth.isLoggedIn()) $location.path('/reader');
+
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -19,20 +21,4 @@ angular.module('feedScopeApp')
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
-
-    $scope.addFeed = function(feedName, feedUrl){
-      Feed.save({},
-        {
-          name: feedName,
-          url: feedUrl
-        },
-        function(feed){
-          $scope.feeds = Feed.query();
-        },
-        function(err){
-          console.log(err);
-        }).$promise;
-    };
-
-    $scope.feeds = Feed.query();
   });

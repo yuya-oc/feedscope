@@ -15,7 +15,7 @@ angular.module('feedScopeApp')
         })
         .then( function() {
           // Logged in, redirect to home
-          $location.path('/');
+          $location.path('/reader');
         })
         .catch( function(err) {
           $scope.errors.other = err.message;
