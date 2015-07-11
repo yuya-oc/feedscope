@@ -6,6 +6,16 @@ var request = require('supertest');
 
 describe('GET /api/feeds', function() {
 
+  it('should not respond without authentication', function(done) {
+    request(app)
+      .get('/api/feeds')
+      .expect(401)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
+/*
   it('should respond with JSON array', function(done) {
     request(app)
       .get('/api/feeds')
@@ -17,4 +27,5 @@ describe('GET /api/feeds', function() {
         done();
       });
   });
+*/
 });
