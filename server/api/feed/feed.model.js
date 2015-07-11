@@ -32,7 +32,7 @@ FeedSchema
 FeedSchema
   .path('subscriber')
   .validate(function(subscriber) {
-    return (subscriber != null);
+    return (subscriber !== null);
   }, 'Subscriber cannot be blank');
 
 // Validate url is not taken by the subscriber
