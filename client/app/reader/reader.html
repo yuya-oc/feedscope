@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-lg-12">
       <div class="input-group">
@@ -12,15 +12,14 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Feeds:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in feeds">
-        <li><a href="#" tooltip="{{thing.url}}">{{thing.name}}</a></li>
+    <div class="col-lg-3">
+      <ul class="nav nav-sidebar">
+        <li ng-repeat="feed in feeds"><a href="#">{{feed.name}}</a></li>
       </ul>
+    </div>
+    <div class="col-lg-9">
+      <!-- blank div -->
     </div>
   </div>
 </div>
