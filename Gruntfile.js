@@ -2,6 +2,8 @@
 'use strict';
 
 module.exports = function (grunt) {
+  var jsbeautifierFiles = ["**/*.js", "!client/bower_components/**/*", "!node_modules/**/*"];
+
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
@@ -17,7 +19,8 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    jsbeautifier: 'grunt-jsbeautifier'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -55,6 +58,10 @@ module.exports = function (grunt) {
       }
     },
     watch: {
+      jsbeautifier: {
+        files: jsbeautifierFiles,
+        tasks: ['jsbeautifier']
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',
@@ -493,6 +500,16 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    "jsbeautifier": {
+      files: jsbeautifierFiles,
+      options: {
+        js: {
+          braceStyle: "end-expand",
+          indentSize: 2
+        }
+      }
+    }
   });
 
   // Used for delaying livereload until after server has restarted
