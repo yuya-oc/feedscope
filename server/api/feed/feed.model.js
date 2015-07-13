@@ -1,12 +1,21 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+  Schema = mongoose.Schema;
 
 var FeedSchema = new Schema({
-  name: { type: String, required: true },
-  url: { type: String, required: true },
-  subscriber: { type: Schema.Types.ObjectId, required: true },
+  name: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  },
+  subscriber: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
   tags: [Schema.Types.ObjectId]
 });
 
@@ -40,13 +49,16 @@ FeedSchema
   .path('url')
   .validate(function(value, respond) {
     var self = this;
-    this.constructor.findOne({url: value, subscriber: this.subscriber}, function(err, feed) {
-      if(err) throw err;
-      if(feed) {
+    this.constructor.findOne({
+      url: value,
+      subscriber: this.subscriber
+    }, function(err, feed) {
+      if (err) throw err;
+      if (feed) {
         return respond(false);
       }
       respond(true);
     });
-}, 'The specified feed is already subscribed.');
+  }, 'The specified feed is already subscribed.');
 
 module.exports = mongoose.model('Feed', FeedSchema);

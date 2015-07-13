@@ -41,12 +41,15 @@ describe('GET /api/feeds', function() {
   });
 
   it('should respond with JSON array', function(done) {
-    User.create(user, function(err, user){
+    User.create(user, function(err, user) {
       request(app)
         .post('/auth/local')
-        .send({email: user_data.email, password: user_data.password})
+        .send({
+          email: user_data.email,
+          password: user_data.password
+        })
         .expect(200)
-        .end(function(err, res){
+        .end(function(err, res) {
           request(app)
             .get('/api/feeds')
             .set('Authorization', 'Bearer ' + res.body.token)

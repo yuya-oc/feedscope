@@ -1,19 +1,27 @@
 'use strict';
 
-describe('Controller: ReaderCtrl', function () {
+describe('Controller: ReaderCtrl', function() {
 
   // load the controller's module
   beforeEach(module('feedScopeApp'));
 
   var ReaderCtrl,
-      scope,
-      $httpBackend;
+    scope,
+    $httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
+  beforeEach(inject(function(_$httpBackend_, $controller, $rootScope) {
     $httpBackend = _$httpBackend_;
     $httpBackend.expectGET('/api/feeds')
-      .respond([{name:'MongoDB'}, {name:'Express'}, {name:'AngularJS'}, {name:'Node.js'}]);
+      .respond([{
+        name: 'MongoDB'
+      }, {
+        name: 'Express'
+      }, {
+        name: 'AngularJS'
+      }, {
+        name: 'Node.js'
+      }]);
 
     scope = $rootScope.$new();
     ReaderCtrl = $controller('ReaderCtrl', {
@@ -21,7 +29,7 @@ describe('Controller: ReaderCtrl', function () {
     });
   }));
 
-  it('should attach a list of things to the scope', function () {
+  it('should attach a list of things to the scope', function() {
     $httpBackend.flush();
     expect(scope.feeds.length).toBe(4);
   });

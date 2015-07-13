@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('MainCtrl', function ($scope, $http, Auth, $location) {
-    if(Auth.isLoggedIn()) $location.path('/reader');
+  .controller('MainCtrl', function($scope, $http, Auth, $location) {
+    if (Auth.isLoggedIn()) $location.path('/reader');
 
     $scope.awesomeThings = [];
 
@@ -11,10 +11,12 @@ angular.module('feedScopeApp')
     });
 
     $scope.addThing = function() {
-      if($scope.newThing === '') {
+      if ($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', {
+        name: $scope.newThing
+      });
       $scope.newThing = '';
     };
 

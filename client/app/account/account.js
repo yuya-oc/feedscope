@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .config(function ($routeProvider) {
+  .config(function($routeProvider) {
     $routeProvider
       .when('/login', {
         templateUrl: 'app/account/login/login.html',

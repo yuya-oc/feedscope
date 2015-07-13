@@ -1,25 +1,25 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location) {
+  .controller('LoginCtrl', function($scope, Auth, $location) {
     $scope.user = {};
     $scope.errors = {};
 
     $scope.login = function(form) {
       $scope.submitted = true;
 
-      if(form.$valid) {
+      if (form.$valid) {
         Auth.login({
-          email: $scope.user.email,
-          password: $scope.user.password
-        })
-        .then( function() {
-          // Logged in, redirect to home
-          $location.path('/reader');
-        })
-        .catch( function(err) {
-          $scope.errors.other = err.message;
-        });
+            email: $scope.user.email,
+            password: $scope.user.password
+          })
+          .then(function() {
+            // Logged in, redirect to home
+            $location.path('/reader');
+          })
+          .catch(function(err) {
+            $scope.errors.other = err.message;
+          });
       }
     };
 
