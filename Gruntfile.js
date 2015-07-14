@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var jsbeautifierFiles = ["**/*.js", "!client/bower_components/**", "!node_modules/**", "!dist/**", "!.git/**", "!.tmp/**"];
+  var jsbeautifierFiles = ["**/*.js", "**/*.css", "**/*.html", "!client/bower_components/**", "!node_modules/**", "!dist/**", "!.git/**", "!.tmp/**"];
 
   var localConfig;
   try {
@@ -507,6 +507,12 @@ module.exports = function(grunt) {
       options: {
         js: {
           braceStyle: "end-expand",
+          indentSize: 2
+        },
+        css: {
+          indentSize: 2
+        },
+        html: {
           indentSize: 2
         }
       }
