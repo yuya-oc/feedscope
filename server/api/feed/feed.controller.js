@@ -16,24 +16,27 @@ var Feed = require('./feed.model');
 exports.index = function(req, res) {
   Feed.find({
     subscriber: req.user._id
-  }, function(err, things) {
+  }, function(err, feeds) {
     if (err) {
       return handleError(res, err);
     }
-    return res.json(200, things);
+    return res.json(200, feeds);
   });
 };
 
 // Get a single feed
 exports.show = function(req, res) {
-  Feed.findById(req.params.id, function(err, thing) {
+  Feed.findOne({
+    _id: req.params.id,
+    subscriber: req.user._id
+  }, function(err, feed) {
     if (err) {
       return handleError(res, err);
     }
-    if (!thing) {
+    if (!feed) {
       return res.send(404);
     }
-    return res.json(thing);
+    return res.json(feed);
   });
 };
 
