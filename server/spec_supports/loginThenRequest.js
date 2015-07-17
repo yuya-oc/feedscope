@@ -25,6 +25,13 @@ module.exports = function(app) {
           return request(app).get(path)
             .set('Authorization', 'Bearer ' + token);
         });
+    },
+    post: function(user, path) {
+      return login(user)
+        .then(function(token) {
+          return request(app).post(path)
+            .set('Authorization', 'Bearer ' + token);
+        });
     }
   }
 };

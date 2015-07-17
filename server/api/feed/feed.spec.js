@@ -160,5 +160,48 @@ describe('GET /api/feeds/:id', function() {
           });
       });
   });
+});
 
+describe('POST /api/feeds', function() {
+
+  beforeEach(function(done) {
+    setupDatabase(done);
+  });
+
+  afterEach(function(done) {
+    teardownDatabase(done);
+  });
+
+  it('should not respond without authentication', function(done) {
+    request(app)
+      .post('/api/feeds')
+      .expect(401)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should respond created feed', function(done) {
+    var name = 'New_feed_name';
+    var url = 'New_feed_url';
+    loginThenRequest(app).post(user_data, '/api/feeds')
+      .then(function(post) {
+        post
+          .send({
+            name: name,
+            url: url
+          })
+          .expect(201)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) return done(err);
+            res.body.should.be.have.property('_id');
+            res.body.should.be.have.property('name', name);
+            res.body.should.be.have.property('url', url);
+            res.body.should.be.have.property('subscriber', user._id.toString());
+            done();
+          });
+      });
+  });
 });

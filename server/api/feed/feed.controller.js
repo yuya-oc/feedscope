@@ -43,11 +43,11 @@ exports.show = function(req, res) {
 // Creates a new feed in the DB.
 exports.create = function(req, res) {
   req.body.subscriber = req.user._id;
-  Feed.create(req.body, function(err, thing) {
+  Feed.create(req.body, function(err, feed) {
     if (err) {
       return handleError(res, err);
     }
-    return res.json(201, thing);
+    return res.json(201, feed);
   });
 };
 
