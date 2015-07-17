@@ -2,7 +2,17 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var jsbeautifierFiles = ["**/*.js", "**/*.css", "**/*.html", "!client/bower_components/**", "!node_modules/**", "!dist/**", "!.git/**", "!.tmp/**"];
+  var jsbeautifierFiles = [
+    "*.js",
+    "client/**/.js",
+    "client/**/.css",
+    "client/**/.html",
+    "!client/bower_components/**/*",
+    "e2e/**/*.js",
+    "server/**/*.js",
+    "server/**/*.css",
+    "server/**/*.html"
+  ];
 
   var localConfig;
   try {
