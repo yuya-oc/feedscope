@@ -78,7 +78,10 @@ exports.update = function(req, res) {
 
 // Deletes a thing from the DB.
 exports.destroy = function(req, res) {
-  Feed.findById(req.params.id, function(err, thing) {
+  Feed.findOne({
+    _id: req.params.id,
+    subscriber: req.user._id
+  }, function(err, thing) {
     if (err) {
       return handleError(res, err);
     }

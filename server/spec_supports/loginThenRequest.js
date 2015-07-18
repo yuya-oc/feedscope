@@ -46,6 +46,12 @@ module.exports = function(app) {
         .then(function(token) {
           return setAuthToken(request(app).patch(path), token);
         });
+    },
+    delete: function(user, path) {
+      return login(user)
+        .then(function(token) {
+          return setAuthToken(request(app).delete(path), token);
+        });
     }
   }
 };

@@ -311,5 +311,62 @@ describe('PUT /api/feeds/:id', function() {
         });
       });
   });
+});
+
+
+describe('PUT /api/feeds/:id', function() {
+
+  beforeEach(function(done) {
+    setupDatabase(done);
+  });
+
+  afterEach(function(done) {
+    teardownDatabase(done);
+  });
+
+  it('should respond 401 without authentication', function(done) {
+    request(app).delete('/api/feeds/' + feed._id)
+      .expect(401)
+      .end(function(err, res) {
+        if (err) return done(err);
+        Feed.findById(feed._id, function(err, deleted) {
+          if (err) return done(err);
+          should.exist(deleted);
+          done();
+        });
+      });
+  });
+
+  it('should remove the requested feed', function(done) {
+    loginThenRequest(app).delete(user_data, '/api/feeds/' + feed._id)
+      .then(function(del) {
+        del
+          .expect(204)
+          .end(function(err, res) {
+            if (err) return done(err);
+            Feed.findById(feed._id, function(err, deleted) {
+              if (err) return done(err);
+              should.not.exist(deleted);
+              done();
+            });
+          });
+      });
+  });
+
+  it('should not remove the requested feed which is subscribed by other users', function(done) {
+    loginThenRequest(app).delete(user_data_2, '/api/feeds/' + feed._id)
+      .then(function(del) {
+        del
+          .expect(404)
+          .end(function(err, res) {
+            if (err) return done(err);
+            Feed.findById(feed._id, function(err, deleted) {
+              if (err) return done(err);
+              should.exist(deleted);
+              done();
+            });
+          });
+      });
+  });
 
 });
