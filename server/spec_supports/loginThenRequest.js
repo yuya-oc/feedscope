@@ -2,6 +2,10 @@
 
 var request = require('supertest');
 
+var setAuthToken = function(request, token) {
+  return request.set('Authorization', 'Bearer ' + token);
+};
+
 module.exports = function(app) {
   var login = function(user) {
     return new Promise(function(resolve, reject) {
@@ -22,29 +26,25 @@ module.exports = function(app) {
     get: function(user, path) {
       return login(user)
         .then(function(token) {
-          return request(app).get(path)
-            .set('Authorization', 'Bearer ' + token);
+          return setAuthToken(request(app).get(path), token);
         });
     },
     post: function(user, path) {
       return login(user)
         .then(function(token) {
-          return request(app).post(path)
-            .set('Authorization', 'Bearer ' + token);
+          return setAuthToken(request(app).post(path), token);
         });
     },
     put: function(user, path) {
       return login(user)
         .then(function(token) {
-          return request(app).put(path)
-            .set('Authorization', 'Bearer ' + token);
+          return setAuthToken(request(app).put(path), token);
         });
     },
     patch: function(user, path) {
       return login(user)
         .then(function(token) {
-          return request(app).patch(path)
-            .set('Authorization', 'Bearer ' + token);
+          return setAuthToken(request(app).patch(path), token);
         });
     }
   }
