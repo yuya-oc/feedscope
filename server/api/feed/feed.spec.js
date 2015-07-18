@@ -192,21 +192,30 @@ describe('POST /api/feeds', function() {
     var url = 'New_feed_url';
     loginThenRequest(app).post(user_data, '/api/feeds')
       .then(function(post) {
-        post
-          .send({
-            name: name,
-            url: url
-          })
-          .expect(201)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            if (err) return done(err);
-            res.body.should.be.have.property('_id');
-            res.body.should.be.have.property('name', name);
-            res.body.should.be.have.property('url', url);
-            res.body.should.be.have.property('subscriber', user._id.toString());
-            done();
-          });
+        return new Promise(function(resolve, reject) {
+          post
+            .send({
+              name: name,
+              url: url
+            })
+            .expect(201)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.have.property('_id');
+              res.body.should.be.have.property('name', name);
+              res.body.should.be.have.property('url', url);
+              res.body.should.be.have.property('subscriber', user._id.toString());
+              resolve(res.body._id);
+            });
+        });
+      })
+      .then(function(id) {
+        Feed.findById(id, function(err, feed) {
+          if (err) return done(err);
+          should.exist(feed);
+          done();
+        });
       });
   });
 });
@@ -235,36 +244,28 @@ describe('PUT /api/feeds/:id', function() {
   it('should respond the updated feed', function(done) {
     loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
       .then(function(post) {
-        post
-          .send({
-            name: 'New name'
-          })
-          .expect(200)
-          .end(function(err, res) {
-            if (err) return done(err);
-            res.body.should.be.have.property('_id');
-            res.body.should.be.have.property('name', 'New name');
-            res.body.should.be.have.property('url', feed.url);
-            done();
-          });
-      });
-  });
-
-  it('should not respond when undefined feed', function(done) {
-    Feed.remove(feed).exec()
-      .then(function() {
-        loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
-          .then(function(post) {
-            post
-              .send({
-                name: 'New name'
-              })
-              .expect(404)
-              .end(function(err, res) {
-                if (err) return done(err);
-                done();
-              });
-          });
+        return new Promise(function(resolve, reject) {
+          post
+            .send({
+              name: 'New name'
+            })
+            .expect(200)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.have.property('_id');
+              res.body.should.be.have.property('name', 'New name');
+              res.body.should.be.have.property('url', feed.url);
+              resolve(res.body._id);
+            });
+        });
+      })
+      .then(function(id) {
+        Feed.findById(id, function(err, updated) {
+          if (err) return done(err);
+          updated.name.should.equal('New name');
+          updated.url.should.equal(feed.url);
+          done();
+        });
       });
   });
 
@@ -289,15 +290,25 @@ describe('PUT /api/feeds/:id', function() {
   it('should not updated a feed which is subscribed by other users', function(done) {
     loginThenRequest(app).put(user_data_2, '/api/feeds/' + feed._id)
       .then(function(post) {
-        post
-          .send({
-            name: 'New name'
-          })
-          .expect(404)
-          .end(function(err, res) {
-            if (err) return done(err);
-            done();
-          });
+        return new Promise(function(resolve, reject) {
+          post
+            .send({
+              name: 'New name'
+            })
+            .expect(404)
+            .end(function(err, res) {
+              if (err) return done(err);
+              resolve(feed._id);
+            });
+        });
+      })
+      .then(function(id) {
+        Feed.findById(id, function(err, target) {
+          if (err) return done(err);
+          target.name.should.equal(feed.name);
+          target.url.should.equal(feed.url);
+          done();
+        });
       });
   });
 
