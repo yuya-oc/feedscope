@@ -63,6 +63,9 @@ exports.update = function(req, res) {
     if (!feed) {
       return res.send(404);
     }
+    if (feed.subscriber.toString() != req.user._id) {
+      return res.send(404);
+    }
     var updated = _.merge(feed, req.body);
     updated.save(function(err) {
       if (err) {

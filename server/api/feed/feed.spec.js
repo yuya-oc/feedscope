@@ -249,4 +249,56 @@ describe('PUT /api/feeds/:id', function() {
           });
       });
   });
+
+  it('should not respond when undefined feed', function(done) {
+    Feed.remove(feed).exec()
+      .then(function() {
+        loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
+          .then(function(post) {
+            post
+              .send({
+                name: 'New name'
+              })
+              .expect(404)
+              .end(function(err, res) {
+                if (err) return done(err);
+                done();
+              });
+          });
+      });
+  });
+
+  it('should not respond when undefined feed', function(done) {
+    Feed.remove(feed).exec()
+      .then(function() {
+        loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
+          .then(function(post) {
+            post
+              .send({
+                name: 'New name'
+              })
+              .expect(404)
+              .end(function(err, res) {
+                if (err) return done(err);
+                done();
+              });
+          });
+      });
+  });
+
+  it('should not updated a feed which is subscribed by other users', function(done) {
+    loginThenRequest(app).put(user_data_2, '/api/feeds/' + feed._id)
+      .then(function(post) {
+        post
+          .send({
+            name: 'New name'
+          })
+          .expect(404)
+          .end(function(err, res) {
+            if (err) return done(err);
+            done();
+          });
+      });
+  });
+
 });
