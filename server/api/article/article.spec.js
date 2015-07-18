@@ -107,5 +107,40 @@ describe('/api/articles', function() {
           done();
         });
     });
+
+    it('should respond with JSON array', function(done) {
+      loginThenRequest(app).get(user_data, '/api/articles')
+        .then(function(get) {
+          get
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.instanceof(Array);
+              res.body.forEach(function(item) {
+                item.subscriber.should.equal(user._id.toString());
+              });
+              done();
+            });
+        });
+    });
+
+    it('should respond articles which is subscribed other users', function(done) {
+      loginThenRequest(app).get(user_data_2, '/api/articles')
+        .then(function(get) {
+          get
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.instanceof(Array);
+              res.body.forEach(function(item) {
+                item.subscriber.should.equal(user2._id.toString());
+              });
+              done();
+            });
+        });
+    });
+
   });
 });

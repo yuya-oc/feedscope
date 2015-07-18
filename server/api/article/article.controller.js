@@ -5,7 +5,9 @@ var Article = require('./article.model');
 
 // Get list of articles
 exports.index = function(req, res) {
-  Article.find(function(err, articles) {
+  Article.find({
+    subscriber: req.user._id
+  }, function(err, articles) {
     if (err) {
       return handleError(res, err);
     }
