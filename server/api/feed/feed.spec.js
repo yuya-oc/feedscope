@@ -209,85 +209,84 @@ describe('POST /api/feeds', function() {
           });
       });
   });
+});
 
-  describe('PUT /api/feeds/:id', function() {
+describe('PUT /api/feeds/:id', function() {
 
-    beforeEach(function(done) {
-      setupDatabase(done);
-    });
-
-    afterEach(function(done) {
-      teardownDatabase(done);
-    });
-
-    it('should not respond without authentication', function(done) {
-      request(app)
-        .put('/api/feeds/' + feed._id)
-        .send(feed_data)
-        .expect(401)
-        .end(function(err, res) {
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should respond the updated feed', function(done) {
-      loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
-        .then(function(post) {
-          post
-            .send({
-              name: 'New name'
-            })
-            .expect(200)
-            .end(function(err, res) {
-              if (err) return done(err);
-              res.body.should.be.have.property('_id');
-              res.body.should.be.have.property('name', 'New name');
-              res.body.should.be.have.property('url', feed.url);
-              done();
-            });
-        });
-    });
+  beforeEach(function(done) {
+    setupDatabase(done);
   });
 
-  describe('PATCH /api/feeds/:id', function() {
-
-    beforeEach(function(done) {
-      setupDatabase(done);
-    });
-
-    afterEach(function(done) {
-      teardownDatabase(done);
-    });
-
-    it('should not respond without authentication', function(done) {
-      request(app)
-        .patch('/api/feeds/' + feed._id)
-        .send(feed_data)
-        .expect(401)
-        .end(function(err, res) {
-          if (err) return done(err);
-          done();
-        });
-    });
-
-    it('should respond the updated feed', function(done) {
-      loginThenRequest(app).patch(user_data, '/api/feeds/' + feed._id)
-        .then(function(patch) {
-          patch
-            .send({
-              name: 'New name'
-            })
-            .expect(200)
-            .end(function(err, res) {
-              if (err) return done(err);
-              res.body.should.be.have.property('_id');
-              res.body.should.be.have.property('name', 'New name');
-              res.body.should.be.have.property('url', feed.url);
-              done();
-            });
-        });
-    });
+  afterEach(function(done) {
+    teardownDatabase(done);
   });
 
+  it('should not respond without authentication', function(done) {
+    request(app)
+      .put('/api/feeds/' + feed._id)
+      .send(feed_data)
+      .expect(401)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should respond the updated feed', function(done) {
+    loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
+      .then(function(post) {
+        post
+          .send({
+            name: 'New name'
+          })
+          .expect(200)
+          .end(function(err, res) {
+            if (err) return done(err);
+            res.body.should.be.have.property('_id');
+            res.body.should.be.have.property('name', 'New name');
+            res.body.should.be.have.property('url', feed.url);
+            done();
+          });
+      });
+  });
+});
+
+describe('PATCH /api/feeds/:id', function() {
+
+  beforeEach(function(done) {
+    setupDatabase(done);
+  });
+
+  afterEach(function(done) {
+    teardownDatabase(done);
+  });
+
+  it('should not respond without authentication', function(done) {
+    request(app)
+      .patch('/api/feeds/' + feed._id)
+      .send(feed_data)
+      .expect(401)
+      .end(function(err, res) {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should respond the updated feed', function(done) {
+    loginThenRequest(app).patch(user_data, '/api/feeds/' + feed._id)
+      .then(function(patch) {
+        patch
+          .send({
+            name: 'New name'
+          })
+          .expect(200)
+          .end(function(err, res) {
+            if (err) return done(err);
+            res.body.should.be.have.property('_id');
+            res.body.should.be.have.property('name', 'New name');
+            res.body.should.be.have.property('url', feed.url);
+            done();
+          });
+      });
+  });
 });
