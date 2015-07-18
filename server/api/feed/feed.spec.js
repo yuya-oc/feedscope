@@ -26,6 +26,11 @@ var feed_data = {
   url: 'http://test.com/feed'
 };
 
+var feed_data_2 = {
+  name: 'Test feed 2',
+  url: 'http://test.com/feed2'
+};
+
 var user = new User(user_data);
 var user2 = new User(user_data_2);
 var feed = new Feed(feed_data);
@@ -204,4 +209,85 @@ describe('POST /api/feeds', function() {
           });
       });
   });
+
+  describe('PUT /api/feeds/:id', function() {
+
+    beforeEach(function(done) {
+      setupDatabase(done);
+    });
+
+    afterEach(function(done) {
+      teardownDatabase(done);
+    });
+
+    it('should not respond without authentication', function(done) {
+      request(app)
+        .put('/api/feeds/' + feed._id)
+        .send(feed_data)
+        .expect(401)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should respond the updated feed', function(done) {
+      loginThenRequest(app).put(user_data, '/api/feeds/' + feed._id)
+        .then(function(post) {
+          post
+            .send({
+              name: 'New name'
+            })
+            .expect(200)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.have.property('_id');
+              res.body.should.be.have.property('name', 'New name');
+              res.body.should.be.have.property('url', feed.url);
+              done();
+            });
+        });
+    });
+  });
+
+  describe('PATCH /api/feeds/:id', function() {
+
+    beforeEach(function(done) {
+      setupDatabase(done);
+    });
+
+    afterEach(function(done) {
+      teardownDatabase(done);
+    });
+
+    it('should not respond without authentication', function(done) {
+      request(app)
+        .patch('/api/feeds/' + feed._id)
+        .send(feed_data)
+        .expect(401)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should respond the updated feed', function(done) {
+      loginThenRequest(app).patch(user_data, '/api/feeds/' + feed._id)
+        .then(function(patch) {
+          patch
+            .send({
+              name: 'New name'
+            })
+            .expect(200)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.have.property('_id');
+              res.body.should.be.have.property('name', 'New name');
+              res.body.should.be.have.property('url', feed.url);
+              done();
+            });
+        });
+    });
+  });
+
 });

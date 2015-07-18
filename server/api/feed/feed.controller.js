@@ -56,19 +56,19 @@ exports.update = function(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Feed.findById(req.params.id, function(err, thing) {
+  Feed.findById(req.params.id, function(err, feed) {
     if (err) {
       return handleError(res, err);
     }
-    if (!thing) {
+    if (!feed) {
       return res.send(404);
     }
-    var updated = _.merge(thing, req.body);
+    var updated = _.merge(feed, req.body);
     updated.save(function(err) {
       if (err) {
         return handleError(res, err);
       }
-      return res.json(200, thing);
+      return res.json(200, feed);
     });
   });
 };

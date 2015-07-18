@@ -32,6 +32,20 @@ module.exports = function(app) {
           return request(app).post(path)
             .set('Authorization', 'Bearer ' + token);
         });
+    },
+    put: function(user, path) {
+      return login(user)
+        .then(function(token) {
+          return request(app).put(path)
+            .set('Authorization', 'Bearer ' + token);
+        });
+    },
+    patch: function(user, path) {
+      return login(user)
+        .then(function(token) {
+          return request(app).patch(path)
+            .set('Authorization', 'Bearer ' + token);
+        });
     }
   }
 };

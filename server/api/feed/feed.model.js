@@ -44,21 +44,4 @@ FeedSchema
     return (subscriber !== null);
   }, 'Subscriber cannot be blank');
 
-// Validate url is not taken by the subscriber
-FeedSchema
-  .path('url')
-  .validate(function(value, respond) {
-    var self = this;
-    this.constructor.findOne({
-      url: value,
-      subscriber: this.subscriber
-    }, function(err, feed) {
-      if (err) throw err;
-      if (feed) {
-        return respond(false);
-      }
-      respond(true);
-    });
-  }, 'The specified feed is already subscribed.');
-
 module.exports = mongoose.model('Feed', FeedSchema);
