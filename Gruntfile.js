@@ -4,9 +4,10 @@
 module.exports = function(grunt) {
   var jsbeautifierFiles = [
     "*.js",
-    "client/**/.js",
-    "client/**/.css",
-    "client/**/.html",
+    "client/**/*.js",
+    "client/**/*.css",
+    "client/**/*.html",
+    "crawler/**/*.js",
     "!client/bower_components/**/*",
     "e2e/**/*.js",
     "server/**/*.js",
