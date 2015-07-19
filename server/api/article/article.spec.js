@@ -143,4 +143,42 @@ describe('/api/articles', function() {
     });
 
   });
+
+  describe('GET /api/articles/:id', function() {
+    it('should respond 401 when not logged in', function(done) {
+      request(app)
+        .get('/api/articles/' + article._id)
+        .expect(401)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should respond with JSON', function(done) {
+      loginThenRequest(app).get(user_data, '/api/articles/' + article._id)
+        .then(function(get) {
+          get
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body._id.should.equal(article._id.toString());
+              done();
+            });
+        });
+    });
+
+    it('should respond 404 when not logged in', function(done) {
+      loginThenRequest(app).get(user_data_2, '/api/articles/' + article._id)
+        .then(function(get) {
+          get
+            .expect(404)
+            .end(function(err, res) {
+              if (err) return done(err);
+              done();
+            });
+        });
+    });
+  });
 });

@@ -17,7 +17,10 @@ exports.index = function(req, res) {
 
 // Get a single article
 exports.show = function(req, res) {
-  Article.findById(req.params.id, function(err, article) {
+  Article.findOne({
+    _id: req.params.id,
+    subscriber: req.user._id
+  }, function(err, article) {
     if (err) {
       return handleError(res, err);
     }
