@@ -56,6 +56,19 @@ exports.update = function(req, res) {
   });
 };
 
+// Get list of articles filtered by feed id
+exports.indexByFeed = function(req, res) {
+  Article.find({
+    sourceFeed: req.params.id,
+    subscriber: req.user._id
+  }, function(err, articles) {
+    if (err) {
+      return handleError(res, err);
+    }
+    return res.json(200, articles);
+  });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }

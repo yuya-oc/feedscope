@@ -238,4 +238,49 @@ describe('/api/articles', function() {
     });
   });
 
+  describe('GET /api/articles/by-feed/:id', function() {
+    it('should respond 401 when not logged in', function(done) {
+      request(app)
+        .get('/api/articles/by-feed' + feed._id)
+        .expect(401)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should respond with JSON array', function(done) {
+      loginThenRequest(app).get(user_data, '/api/articles/by-feed/' + feed._id)
+        .then(function(get) {
+          get
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.instanceof(Array);
+              res.body.forEach(function(item) {
+                item.sourceFeed.should.equal(feed._id.toString());
+                item.subscriber.should.equal(user._id.toString());
+              });
+              done();
+            });
+        });
+    });
+
+    it('should not respond articles which are subscribed other users', function(done) {
+      loginThenRequest(app).get(user_data_2, '/api/articles/by-feed/' + feed._id)
+        .then(function(get) {
+          get
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.should.be.instanceof(Array);
+              res.body.length.should.equal(0);
+              done();
+            });
+        });
+    });
+  });
+
 });
