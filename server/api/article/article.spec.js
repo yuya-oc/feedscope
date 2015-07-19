@@ -181,4 +181,61 @@ describe('/api/articles', function() {
         });
     });
   });
+
+  describe('PUT /api/articles/:id', function() {
+    it('should respond 401 when not logged in', function(done) {
+      request(app)
+        .put('/api/articles/' + article._id)
+        .send({
+          title: 'New article name',
+        })
+        .expect(401)
+        .end(function(err, res) {
+          if (err) return done(err);
+          Article.findById(article._id, function(err, updated) {
+            if (err) return done(err);
+            updated.title.should.not.equal('New article name');
+            done();
+          });
+        });
+    });
+
+    it('should respond the updated article', function(done) {
+      loginThenRequest(app).put(user_data, '/api/articles/' + article._id)
+        .then(function(put) {
+          put.send({
+              title: 'New article name',
+            })
+            .expect(200)
+            .end(function(err, res) {
+              if (err) return done(err);
+              res.body.title.should.equal('New article name');
+              Article.findById(article._id, function(err, updated) {
+                if (err) return done(err);
+                updated.title.should.equal('New article name');
+                done();
+              });
+            });
+        });
+    });
+
+    it('should not updated the article which is subscribed by other users', function(done) {
+      loginThenRequest(app).put(user_data_2, '/api/articles/' + article._id)
+        .then(function(put) {
+          put.send({
+              title: 'New article name',
+            })
+            .expect(404)
+            .end(function(err, res) {
+              if (err) return done(err);
+              Article.findById(article._id, function(err, updated) {
+                if (err) return done(err);
+                updated.title.should.not.equal('New article name');
+                done();
+              });
+            });
+        });
+    });
+  });
+
 });

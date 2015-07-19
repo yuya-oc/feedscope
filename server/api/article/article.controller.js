@@ -36,7 +36,10 @@ exports.update = function(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Article.findById(req.params.id, function(err, article) {
+  Article.findOne({
+    _id: req.params.id,
+    subscriber: req.user._id
+  }, function(err, article) {
     if (err) {
       return handleError(res, err);
     }
