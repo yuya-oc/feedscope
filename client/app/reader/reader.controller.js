@@ -16,4 +16,8 @@ angular.module('feedScopeApp')
     };
 
     $scope.feeds = Feed.query();
+
+    $scope.selectFeed = function(feed) {
+      $scope.selectedFeed = feed;
+    };
   });
