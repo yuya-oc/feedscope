@@ -4,7 +4,10 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({
-  read: Boolean,
+  read: {
+    type: Boolean,
+    default: false
+  },
   sourceFeed: {
     type: Schema.Types.ObjectId,
     required: true
