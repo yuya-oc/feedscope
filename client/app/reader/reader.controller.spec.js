@@ -22,6 +22,8 @@ describe('Controller: ReaderCtrl', function() {
       }, {
         name: 'Node.js'
       }]);
+    $httpBackend.expectGET('/api/articles')
+      .respond([]);
 
     scope = $rootScope.$new();
     ReaderCtrl = $controller('ReaderCtrl', {
