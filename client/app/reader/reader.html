@@ -21,8 +21,9 @@
     <div class="col-lg-9">
       <h1 class="page-header">{{selectedFeed.name || 'Select a feed'}}</h1>
       <ul>
-        <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id }">
-          <a ng-href="{{article.link}}" target="_blank">{{article.title}}</a>
+        <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | orderBy: '-date'">
+          <h2><a ng-href="{{article.link}}" target="_blank">{{article.title}}</a></h2>
+          <p>{{article.date}}</p>
         </li>
       </ul>
     </div>

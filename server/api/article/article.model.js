@@ -20,7 +20,9 @@ var ArticleSchema = new Schema({
   description: String,
   summary: String,
   link: String,
-  guid: String
+  guid: String,
+  date: Date,
+  pubdate: Date
 });
 
 module.exports = mongoose.model('Article', ArticleSchema);
