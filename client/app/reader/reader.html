@@ -24,6 +24,7 @@
         <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | orderBy: '-date'">
           <h2><a ng-href="{{article.link}}" target="_blank">{{article.title}}</a></h2>
           <p>{{article.date}}</p>
+          <span ng-bind-html="article.summary"></span>
         </li>
       </ul>
     </div>
