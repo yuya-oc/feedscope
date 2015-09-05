@@ -3,14 +3,10 @@
 angular.module('feedScopeApp')
   .factory('Article', function($resource) {
     return $resource('/api/articles/:id', {
-      id: '@id'
+      id: '@_id'
     }, {
-      /*      query: {
-              method: 'GET',
-              isArray: true
-            },*/
-      //      subscribe: {
-      //        method: 'POST',
-      //      }
+      update: {
+        method: 'PUT',
+      }
     });
   });

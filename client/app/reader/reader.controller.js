@@ -21,4 +21,10 @@ angular.module('feedScopeApp')
     $scope.selectFeed = function(feed) {
       $scope.selectedFeed = feed;
     };
+
+    $scope.read = function(article) {
+      console.log(article);
+      article.read = true;
+      article.$update();
+    }
   });
