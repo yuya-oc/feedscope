@@ -2,23 +2,23 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-lg-12">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Feed name" ng-model="feedName" ng-required="true">
-        <input type="text" class="form-control" placeholder="RSS/Atom URL" ng-model="feedUrl" ng-required="true">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="addFeed(feedName, feedUrl)">Add</button>
-        </span>
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-sm-3 col-md-2 sidebar affix">
       <ul class="nav nav-sidebar">
         <li ng-repeat="feed in feeds | orderBy: 'name'" ng-click="selectFeed(feed)"><a href="#">{{feed.name}}</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Feed name" ng-model="feedName" ng-required="true">
+            <input type="text" class="form-control" placeholder="RSS/Atom URL" ng-model="feedUrl" ng-required="true">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="addFeed(feedName, feedUrl)">Add</button>
+            </span>
+          </div>
+        </div>
+      </div>
       <h1 class="page-header">{{selectedFeed.name || 'Select a feed'}}</h1>
       <ul>
         <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
