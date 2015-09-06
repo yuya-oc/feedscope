@@ -23,9 +23,17 @@ angular.module('feedScopeApp')
     };
 
     $scope.read = function(article) {
-      console.log(article);
-      article.read = true;
-      article.$update();
+      var read_article = {
+        _id: article._id,
+        read: true
+      };
+      Article.update({}, read_article,
+        function(a) {
+          article.read = true;
+        },
+        function(err) {
+          console.log(err);
+        });
     }
 
     $scope.readFeed = function(feed) {
