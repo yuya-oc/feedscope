@@ -27,4 +27,14 @@ angular.module('feedScopeApp')
       article.read = true;
       article.$update();
     }
+
+    $scope.readFeed = function(feed) {
+      $scope.articles
+        .filter(function(article) {
+          return (article.sourceFeed == feed._id);
+        })
+        .forEach(function(article) {
+          $scope.read(article);
+        });
+    }
   });

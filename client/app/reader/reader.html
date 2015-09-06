@@ -19,7 +19,10 @@
           </div>
         </div>
       </div>
-      <h1 class="page-header">{{selectedFeed.name || 'Select a feed'}}</h1>
+      <h1 class="page-header">
+        {{selectedFeed.name || 'Select a feed from sidebar'}}
+        <button ng-if="selectedFeed" type="button" class="btn btn-default" ng-click="readFeed(selectedFeed)">Mark as read</button>
+      </h1>
       <ul>
         <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
           <h2><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2>
