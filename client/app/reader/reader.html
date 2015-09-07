@@ -29,7 +29,7 @@
         <div class="panel-heading">
           <h2 class="panel-title article-title"><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2> {{article.date}}
         </div>
-        <div class="panel-body">
+        <div ng-if="article.summary" class="panel-body">
           <span ng-bind-html="article.summary"></span>
         </div>
       </div>
