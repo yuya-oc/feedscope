@@ -23,13 +23,15 @@
         {{selectedFeed.name || 'Select a feed from sidebar'}}
         <button ng-if="selectedFeed" type="button" class="btn btn-default" ng-click="readFeed(selectedFeed)">Mark as read</button>
       </h1>
-      <ul>
-        <li ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
-          <h2><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2>
+      <div class="panel panel-default" ng-repeat="article in articles | filter: { sourceFeed: selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
+        <div class="panel-heading">
+          <h2 class="panel-title article-title"><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2>
           <p>{{article.date}}</p>
+        </div>
+        <div class="panel-body">
           <span ng-bind-html="article.summary"></span>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
