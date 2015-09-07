@@ -45,4 +45,15 @@ angular.module('feedScopeApp')
           $scope.read(article);
         });
     }
+
+    $scope.countNonReadArticles = function(feed) {
+      var nonread = $scope.articles
+        .filter(function(article) {
+          return (article.sourceFeed == feed._id);
+        })
+        .filter(function(article) {
+          return (article.read == false);
+        });
+      return nonread.length;
+    }
   });
