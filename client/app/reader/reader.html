@@ -31,8 +31,8 @@
         <div class="panel-heading">
           <h2 class="panel-title article-title"><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2> {{article.date}}
         </div>
-        <div ng-if="article.summary" class="panel-body">
-          <span ng-bind-html="article.summary"></span>
+        <div ng-if="summarize(article)" class="panel-body">
+          <span ng-bind-html="summarize(article)"></span>
         </div>
       </div>
     </div>

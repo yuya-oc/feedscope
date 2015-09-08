@@ -56,4 +56,9 @@ angular.module('feedScopeApp')
         });
       return nonread.length;
     }
+
+    $scope.summarize = function(article) {
+      if (article.summary) return article.summary;
+      return article.description;
+    }
   });
