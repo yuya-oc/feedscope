@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar affix">
+    <div class="col-sm-3 col-md-2 hidden-xs sidebar affix">
       <ul class="nav nav-sidebar">
         <li ng-repeat="feed in feeds | orderBy: 'name'" ng-click="selectFeed(feed)">
           <a href="#">{{feed.name}} <span ng-if="(countNonRead=countNonReadArticles(feed))" class="badge">{{countNonRead}}</span></a>
