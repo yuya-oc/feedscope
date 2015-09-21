@@ -5,7 +5,7 @@ angular.module('feedScopeApp', [
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'ui.bootstrap'
+    'ngMaterial'
   ])
   .config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -15,6 +15,11 @@ angular.module('feedScopeApp', [
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+  })
+  .config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+      .primaryPalette('green')
+      .accentPalette('red');
   })
 
 .factory('authInterceptor', function($rootScope, $q, $cookieStore, $location) {
