@@ -3,10 +3,20 @@
   overflow-y: scroll;
 }
 
-.article-title {
+
+/*.article-title {
   font-size: 30px;
 }
 
 .buttons-for-feed {
   margin-bottom: 20px;
+}*/
+
+section {
+  background: #fff;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /*  padding: 20px;*/
 }
