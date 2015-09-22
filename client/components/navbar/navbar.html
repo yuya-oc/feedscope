@@ -15,6 +15,9 @@
           <md-icon>more_vert</md-icon>
         </md-button>
         <md-menu-content>
+          <md-menu-item ng-if="isAdmin()">
+            <md-button ng-href="/admin">Admin</md-button>
+          </md-menu-item>
           <md-menu-item>
             <md-button ng-href="/settings">Settings</md-button>
           </md-menu-item>

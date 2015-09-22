@@ -1,13 +1,14 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
-  <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
-      <strong>{{user.name}}</strong>
-      <br>
-      <span class="text-muted">{{user.email}}</span>
-      <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
-    </li>
-  </ul>
-</div>
+<h1 class="md-display-1">User Administraion</h1>
+
+<md-list>
+  <md-subheader>The delete user and user index api routes are restricted to users with the 'admin' role.</md-subheader>
+  <md-list-item class="md-2-line" ng-repeat="user in users | orderBy: 'name'">
+    <div class="md-list-item-text">
+      <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+    </div>
+    <md-icon ng-click="delete($event, user)">delete</md-icon>
+  </md-list-item>
+</md-list>
