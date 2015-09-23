@@ -31,7 +31,7 @@ describe('Controller: ReaderCtrl', function() {
     });
   }));
 
-  it('should attach a list of things to the scope', function() {
+  it('should attach a list of feeds to the scope', function() {
     $httpBackend.flush();
     expect(scope.feeds.length).toBe(4);
   });
