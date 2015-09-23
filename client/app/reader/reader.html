@@ -1,44 +1,31 @@
-<div class="row">
-  <div class="col-sm-3 col-md-2 hidden-xs sidebar affix">
-    <ul class="nav nav-sidebar">
-      <li ng-repeat="feed in feeds | orderBy: 'name'" ng-click="selectFeed(feed)">
-        <a href="#">{{feed.name}} <span ng-if="(countNonRead=countNonReadArticles(feed))" class="badge">{{countNonRead}}</span></a>
-      </li>
-    </ul>
+<div layout="column">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Feed name" ng-model="feedName" ng-required="true">
+    <input type="text" class="form-control" placeholder="RSS/Atom URL" ng-model="feedUrl" ng-required="true">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" ng-click="addFeed(feedName, feedUrl)">Add</button>
+    </span>
   </div>
-  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Feed name" ng-model="feedName" ng-required="true">
-          <input type="text" class="form-control" placeholder="RSS/Atom URL" ng-model="feedUrl" ng-required="true">
-          <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="addFeed(feedName, feedUrl)">Add</button>
-            </span>
-        </div>
-      </div>
-    </div>
 
-    <div layout="row" layout-align="start center">
-      <h1 class="md-headline">{{global.selectedFeed.name || 'Select a feed from sidebar'}}</h1>
-      <md-button ng-if="selectedFeed" ng-click="readFeed(selectedFeed)">Mark as read</md-button>
-    </div>
-    <section class="md-whiteframe-z1" layout="column" ng-repeat="article in articles | filter: { sourceFeed: global.selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <span><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></span>
-          <span flex></span>
-          <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
-            <md-icon>more_vert</md-icon>
-          </md-button>
-        </div>
-      </md-toolbar>
-      <span><h2 class="md-title"><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2></span>
-      <p class="md-subhead">{{article.date}}</p>
-      <md-divider></md-divider>
-      <div ng-if="summarize(article)" class="panel-body">
-        <span ng-bind-html="summarize(article)"></span>
-      </div>
-    </section>
+  <div layout="row" layout-align="start center">
+    <h1 class="md-headline">{{global.selectedFeed.name || 'Select a feed from sidebar'}}</h1>
+    <md-button ng-if="selectedFeed" ng-click="readFeed(selectedFeed)">Mark as read</md-button>
   </div>
+  <section class="md-whiteframe-z1" layout="column" ng-repeat="article in articles | filter: { sourceFeed: global.selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></span>
+        <span flex></span>
+        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+          <md-icon>more_vert</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <span><h2 class="md-title"><a ng-href="{{article.link}}" ng-click="read(article)" target="_blank">{{article.title}}</a></h2></span>
+    <p class="md-subhead">{{article.date}}</p>
+    <md-divider></md-divider>
+    <div ng-if="summarize(article)" class="panel-body">
+      <span ng-bind-html="summarize(article)"></span>
+    </div>
+  </section>
 </div>
