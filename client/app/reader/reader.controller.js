@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('ReaderCtrl', function($scope, $http, Article, Feed) {
+  .controller('ReaderCtrl', function($scope, $http, Article, Feed, Global) {
     $scope.addFeed = function(feedName, feedUrl) {
       Feed.save({}, {
           name: feedName,
@@ -15,7 +15,8 @@ angular.module('feedScopeApp')
         }).$promise;
     };
 
-    $scope.feeds = Feed.query();
+    Global.feeds = Feed.query();
+    $scope.feeds = Global.feeds;
     $scope.articles = Article.query();
 
     $scope.selectFeed = function(feed) {

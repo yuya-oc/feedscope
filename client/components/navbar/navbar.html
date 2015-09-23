@@ -1,31 +1,29 @@
-<md-content ng-controller="NavbarCtrl">
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <a href="/">FeedScope</a>
+<md-toolbar ng-controller="NavbarCtrl">
+  <div class="md-toolbar-tools">
+    <a href="/">FeedScope</a>
 
-      <span flex></span>
+    <span flex></span>
 
-      <md-button ng-hide="isLoggedIn()" href="/signup">Sign up</md-button>
-      <md-button ng-hide="isLoggedIn()" class="md-raised" href="/login">Login</md-button>
-      <span ng-show="isLoggedIn()">
+    <md-button ng-hide="isLoggedIn()" href="/signup">Sign up</md-button>
+    <md-button ng-hide="isLoggedIn()" class="md-raised" href="/login">Login</md-button>
+    <span ng-show="isLoggedIn()">
         <p class="md-body-1">Hello, {{ getCurrentUser().name }}</p>
       </span>
-      <md-menu ng-show="isLoggedIn()">
-        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
-          <md-icon>more_vert</md-icon>
-        </md-button>
-        <md-menu-content>
-          <md-menu-item ng-if="isAdmin()">
-            <md-button ng-href="/admin">Admin</md-button>
-          </md-menu-item>
-          <md-menu-item>
-            <md-button ng-href="/settings">Settings</md-button>
-          </md-menu-item>
-          <md-menu-item>
-            <md-button ng-click="logout()">Logout</md-button>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
-  </md-toolbar>
-</md-content>
+    <md-menu ng-show="isLoggedIn()">
+      <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+        <md-icon>more_vert</md-icon>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item ng-if="isAdmin()">
+          <md-button ng-href="/admin">Admin</md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-href="/settings">Settings</md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="logout()">Logout</md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </div>
+</md-toolbar>

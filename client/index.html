@@ -37,7 +37,15 @@
     <![endif]-->
 
   <!-- Add your site or application content here -->
-  <div ng-view=""></div>
+  <div layout="row" style="height:inherit" ng-controller="IndexCtrl">
+    <md-sidenav md-is-locked-open="$mdMedia('gt-sm') && isLoggedIn()" md-component-id="left" class="md-sidenav-left">
+      Left Nav!
+    </md-sidenav>
+    <div flex layout="column">
+      <div ng-include="'components/navbar/navbar.html'"></div>
+      <md-content md-scroll-y flex ng-view=""></md-content>
+    </div>
+  </div>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <script>
@@ -93,11 +101,13 @@
   <script src="components/auth/auth.service.js"></script>
   <script src="components/auth/user.service.js"></script>
   <script src="components/feed/feed.service.js"></script>
+  <script src="components/global/global.service.js"></script>
   <script src="components/modal/modal.service.js"></script>
   <script src="components/mongoose-error/mongoose-error.directive.js"></script>
   <script src="components/navbar/navbar.controller.js"></script>
   <!-- endinjector -->
   <!-- endbuild -->
+  <script src="index.controller.js"></script>
 </body>
 
 </html>
