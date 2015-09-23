@@ -39,7 +39,11 @@
   <!-- Add your site or application content here -->
   <div layout="row" style="height:inherit" ng-controller="IndexCtrl">
     <md-sidenav md-is-locked-open="$mdMedia('gt-sm') && isLoggedIn()" md-component-id="left" class="md-sidenav-left">
-      Left Nav!
+      <md-list>
+        <md-list-item ng-repeat="feed in global.feeds | orderBy: 'name'" ng-click="selectFeed(feed)">
+          {{feed.name}}
+        </md-list-item>
+      </md-list>
     </md-sidenav>
     <div flex layout="column">
       <div ng-include="'components/navbar/navbar.html'"></div>

@@ -19,10 +19,6 @@ angular.module('feedScopeApp')
     $scope.feeds = Global.feeds;
     $scope.articles = Article.query();
 
-    $scope.selectFeed = function(feed) {
-      $scope.selectedFeed = feed;
-    };
-
     $scope.read = function(article) {
       var read_article = {
         _id: article._id,

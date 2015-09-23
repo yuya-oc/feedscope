@@ -2,6 +2,9 @@
 
 angular.module('feedScopeApp')
   .controller('IndexCtrl', function($scope, Global, Auth) {
+    $scope.global = Global;
     $scope.isLoggedIn = Auth.isLoggedIn;
-    $scope.pageTitle = Global.pageTitle;
+    $scope.selectFeed = function(feed) {
+      Global.selectedFeed = feed;
+    };
   });
