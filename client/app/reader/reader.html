@@ -9,7 +9,7 @@
 
   <div layout="row" layout-align="start center">
     <h1 class="md-headline">{{global.selectedFeed.name || 'Select a feed from sidebar'}}</h1>
-    <md-button ng-if="selectedFeed" ng-click="readFeed(selectedFeed)">Mark as read</md-button>
+    <md-button ng-if="global.selectedFeed" ng-click="readFeed(global.selectedFeed)">Mark as read</md-button>
   </div>
   <section class="md-whiteframe-z1" layout="column" ng-repeat="article in articles | filter: { sourceFeed: global.selectedFeed._id } | filter: { read: false } | orderBy: '-date'">
     <md-toolbar>
