@@ -1,11 +1,25 @@
 // Generated on 2015-07-06 using generator-angular-fullstack 2.0.13
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
+  var jsbeautifierFiles = [
+    "*.js",
+    "client/**/*.js",
+    "client/**/*.css",
+    "client/**/*.html",
+    "crawler/**/*.js",
+    "!client/bower_components/**/*",
+    "e2e/**/*.js",
+    "server/**/*.js",
+    "server/**/*.css",
+    "server/**/*.html"
+  ];
+
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
-  } catch(e) {
+  }
+  catch (e) {
     localConfig = {};
   }
 
@@ -17,7 +31,8 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    jsbeautifier: 'grunt-jsbeautifier'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -55,12 +70,17 @@ module.exports = function (grunt) {
       }
     },
     watch: {
+      jsbeautifier: {
+        files: jsbeautifierFiles,
+        tasks: ['jsbeautifier']
+      },
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.js',
           '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
-          '!<%= yeoman.client %>/app/app.js'],
+          '!<%= yeoman.client %>/app/app.js'
+        ],
         tasks: ['injector:scripts']
       },
       injectCss: {
@@ -192,14 +212,14 @@ module.exports = function (grunt) {
           env: {
             PORT: process.env.PORT || 9000
           },
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
+          callback: function(nodemon) {
+            nodemon.on('log', function(event) {
               console.log(event.colour);
             });
 
             // opens browser on initial server start
-            nodemon.on('config:update', function () {
-              setTimeout(function () {
+            nodemon.on('config:update', function() {
+              setTimeout(function() {
                 require('open')('http://localhost:8080/debug?port=5858');
               }, 500);
             });
@@ -225,7 +245,7 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/public/{,*/}*.js',
             '<%= yeoman.dist %>/public/{,*/}*.css',
             '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            // '<%= yeoman.dist %>/public/assets/fonts/*'
           ]
         }
       }
@@ -393,10 +413,8 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-      server: [
-      ],
-      test: [
-      ],
+      server: [],
+      test: [],
       debug: {
         tasks: [
           'nodemon',
@@ -467,11 +485,12 @@ module.exports = function (grunt) {
         },
         files: {
           '<%= yeoman.client %>/index.html': [
-              ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
-               '!{.tmp,<%= yeoman.client %>}/app/app.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
-               '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js']
+            ['{.tmp,<%= yeoman.client %>}/{app,components}/**/*.js',
+              '!{.tmp,<%= yeoman.client %>}/app/app.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.spec.js',
+              '!{.tmp,<%= yeoman.client %>}/{app,components}/**/*.mock.js'
             ]
+          ]
         }
       },
 
@@ -493,15 +512,31 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    "jsbeautifier": {
+      files: jsbeautifierFiles,
+      options: {
+        js: {
+          braceStyle: "end-expand",
+          indentSize: 2
+        },
+        css: {
+          indentSize: 2
+        },
+        html: {
+          indentSize: 2
+        }
+      }
+    }
   });
 
   // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
+  grunt.registerTask('wait', function() {
     grunt.log.ok('Waiting for server reload...');
 
     var done = this.async();
 
-    setTimeout(function () {
+    setTimeout(function() {
       grunt.log.writeln('Done waiting!');
       done();
     }, 1500);
@@ -511,7 +546,7 @@ module.exports = function (grunt) {
     this.async();
   });
 
-  grunt.registerTask('serve', function (target) {
+  grunt.registerTask('serve', function(target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
     }
@@ -542,7 +577,7 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', function () {
+  grunt.registerTask('server', function() {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });

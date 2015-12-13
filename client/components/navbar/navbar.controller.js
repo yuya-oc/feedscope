@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }];
+  .controller('NavbarCtrl', function($scope, $location, Auth) {
+    /*
+        $scope.menu = [{
+          'title': 'Home',
+          'link': '/'
+        }];
+    */
 
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;

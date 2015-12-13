@@ -1,22 +1,21 @@
 'use strict';
 
 angular.module('feedScopeApp')
-  .factory('User', function ($resource) {
+  .factory('User', function($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'
-    },
-    {
+    }, {
       changePassword: {
         method: 'PUT',
         params: {
-          controller:'password'
+          controller: 'password'
         }
       },
       get: {
         method: 'GET',
         params: {
-          id:'me'
+          id: 'me'
         }
       }
-	  });
+    });
   });
